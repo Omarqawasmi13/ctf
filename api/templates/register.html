@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Register - CTF{% endblock %}
+{% block content %}
+<h2>Register</h2>
+<form method="post" class="form">
+    {{ form.csrf_token }}
+    <label>{{ form.team_name.label }} {{ form.team_name(size=32) }}</label>
+    <label>{{ form.team_password.label }} {{ form.team_password() }}</label>
+    <label>{{ form.email.label }} {{ form.email(size=32) }}</label>
+    <label>{{ form.password.label }} {{ form.password() }}</label>
+    <label>{{ form.confirm.label }} {{ form.confirm() }}</label>
+    {{ form.submit(class_='btn') }}
+</form>
+{% endblock %}

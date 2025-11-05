@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Challenges - CTF{% endblock %}
+{% block content %}
+<h2>Challenges</h2>
+{% if not challenges %}
+<p class="muted">No challenges available yet.</p>
+{% endif %}
+
+<div class="filter-bar">
+  <a class="pill {{ 'active' if not active_cat else '' }}" href="{{ url_for('challenges') }}">All</a>
+  {% for cat in categories %}
+    <a class="pill {{ 'active' if active_cat == cat else '' }}" href="{{ url_for('challenges', cat=cat) }}">{{ cat }}</a>
+  {% endfor %}
+  <span class="muted" style="margin-left: auto;">Unsolved shown first</span>
+  </div>
+
+{% for group in challenges|groupby('category') %}
+  <section style="margin-top: 18px;">
+    <h3>{{ group.grouper }}</h3>
+    <div class="challenges">
+      {% for c in group.list %}
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>{{ c.title }}</h3>
+            <span class="muted small">{{ solve_counts.get(c.id, 0) }} solves</span>
+          </div>
+          <div class="points">{{ c.points }} pts</div>
+        </div>
+        <div class="card-body">
+          <details>
+            <summary>Show description</summary>
+            <p style="margin-top:8px;">{{ c.description }}</p>
+          </details>
+          {% if c.attachment %}
+            <p style="margin-top:8px;"><a class="btn secondary small" href="{{ url_for('download_attachment', cid=c.id) }}">Download attachment ({{ c.attachment.orig_name }})</a></p>
+          {% endif %}
+          {% set solved = (c.id in solved_ids) %}
+          <div style="margin-top:10px;">
+          {% if solved %}
+            <span class="badge" style="background:#1b3827; color: var(--success); border-color:#224631;">Solved ✓</span>
+          {% endif %}
+          <form method="post" class="inline-form">
+            <input type="hidden" name="chall-{{ c.id }}-cid" value="{{ c.id }}">
+            {{ forms[c.id].csrf_token }}
+            {{ forms[c.id].flag(size=40, placeholder='flag{...}', disabled=solved) }}
+            {{ forms[c.id].submit(class_='btn', disabled=solved) }}
+          </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }} Challenge - CTF{% endblock %}
+{% block content %}
+<h2>{{ action }} Challenge</h2>
+<form method="post" class="form" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <label>{{ form.title.label }} {{ form.title(size=40) }}</label>
+    <label>{{ form.category.label }} {{ form.category(size=30) }}</label>
+    <label>{{ form.points.label }} {{ form.points(min=1) }}</label>
+    <label>{{ form.description.label }} {{ form.description(rows=6) }}</label>
+    <label>{{ form.flag.label }} {{ form.flag(size=40, placeholder='flag{...}') }}</label>
+    <label>{{ form.attachment.label }} {{ form.attachment() }}</label>
+    <label class="checkbox">{{ form.remove_attachment() }} {{ form.remove_attachment.label }}</label>
+    <label class="checkbox">{{ form.visible() }} {{ form.visible.label }}</label>
+    {{ form.submit(class_='btn') }}
+    <a class="btn secondary" href="{{ url_for('admin_panel') }}">Cancel</a>
+{% endblock %}
