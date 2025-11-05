@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Home - CTF{% endblock %}
+{% block content %}
+<section>
+    <h1>Welcome to the CTF</h1>
+    <p>Compete, solve, and climb the scoreboard.</p>
+    <div class="stats">
+        <div class="stat"><span class="num">{{ total_challs }}</span><span class="label">Challenges</span></div>
+        <div class="stat"><span class="num">{{ total_teams }}</span><span class="label">Teams</span></div>
+        <div class="stat"><span class="num">{{ total_solves }}</span><span class="label">Solves</span></div>
+    </div>
+</section>
+{% endblock %}
+

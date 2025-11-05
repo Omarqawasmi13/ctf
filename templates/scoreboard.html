@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Scoreboard - CTF{% endblock %}
+{% block content %}
+<h2>Scoreboard</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row.team_name }}</td>
+            <td>{{ row.score or 0 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+{% endblock %}
